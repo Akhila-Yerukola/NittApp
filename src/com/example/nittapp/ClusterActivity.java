@@ -21,7 +21,7 @@ public class ClusterActivity extends Activity {
 	static int pageNo=1;
 	List<String> listForEvents;
 	Intent i;
-	static int clusterid;
+	static String clustername;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,8 +42,8 @@ public class ClusterActivity extends Activity {
 					events.open();
 					Log.e("name of clicked position",
 							listForEvents.get(position));
-					
-					clusterid = events.getClusterId(listForEvents.get(position));
+					clustername=listForEvents.get(position);
+					//clustername = events.getClusterId(listForEvents.get(position));
 					events.close();
 					pageNo++;
 					}
@@ -79,7 +79,7 @@ public class ClusterActivity extends Activity {
 						android.R.layout.simple_list_item_1, listForEvents));
 				break;
 			case 2:
-				listForEvents = events.getEvents(clusterid + "");
+				listForEvents = events.getEvents(clustername);
 				eventsList.setAdapter(new ArrayAdapter<String>(ClusterActivity.this,
 						android.R.layout.simple_list_item_1, listForEvents));
 				Log.e("Setting events", "yayy");

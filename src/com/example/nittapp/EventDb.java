@@ -21,7 +21,7 @@ public class EventDb {
 	public static final String KEY_VENUE = "_venue";
 	public static final String KEY_ORGANISATIONNAME = "_orgname";
 	public static final String KEY_EVENTID = "_eventid";
-	public static final String KEY_CLUSTERID = "_clusterid";
+	//public static final String KEY_CLUSTERID = "_clusterid";
 	public static final String KEY_CLUSTERNAME = "_clustername";
 	public static final String KEY_UPDATE = "_update";
 	public static final String KEY_DELETE = "_delete";
@@ -51,8 +51,7 @@ public class EventDb {
 			db.execSQL("CREATE TABLE " + DATABASE_TABLE + "(" + KEY_NAME
 					+ " TEXT NOT NULL, " + KEY_DATE + " TEXT, " + KEY_TIME
 					+ " TEXT, " + KEY_VENUE + " TEXT, " + KEY_ORGANISATIONNAME
-					+ " TEXT, " + KEY_EVENTID + " TEXT, " + KEY_CLUSTERID
-					+ " TEXT, " + KEY_CLUSTERNAME + " TEXT, " + KEY_DELETE
+					+ " TEXT, " + KEY_EVENTID + " TEXT, " + KEY_CLUSTERNAME + " TEXT, " + KEY_DELETE
 					+ " TEXT, " + KEY_UPDATE + " TEXT, " + KEY_DESC + " TEXT);");
 			// db.execSQL("create table MyEvents(_event text not null, _date text, _time text, _priority varchar(10));");
 
@@ -83,7 +82,7 @@ public class EventDb {
 	}
 
 	public long createEntry(String name, String date, String time, String desc,
-			String venue, String org, String eventid, String clusterid,
+			String venue, String org, String eventid,
 			String clustername, String delete, String update) {
 		// TODO Auto-generated method stub
 
@@ -95,7 +94,7 @@ public class EventDb {
 		cv.put(KEY_VENUE, venue);
 		cv.put(KEY_ORGANISATIONNAME, org);
 		cv.put(KEY_EVENTID, eventid);
-		cv.put(KEY_CLUSTERID, clusterid);
+		//cv.put(KEY_CLUSTERID, clusterid);
 		cv.put(KEY_CLUSTERNAME, clustername);
 		cv.put(KEY_DELETE, delete);
 		cv.put(KEY_UPDATE, update);
@@ -145,11 +144,11 @@ public class EventDb {
 
 	}
 
-	public List getEvents(String clusterid) {
+	public List getEvents(String clustername) {
 		// TODO Auto-generated method stub
 		String[] columns = new String[] { KEY_NAME };
-		Cursor m = ourDatabase.query(DATABASE_TABLE, columns, "_clusterid='"
-				+ clusterid + "'", null, null, null, KEY_NAME + " ASC");
+		Cursor m = ourDatabase.query(DATABASE_TABLE, columns, "_clustername='"
+				+ clustername + "'", null, null, null, KEY_NAME + " ASC");
 		List docList = new ArrayList<String>();
 		int iEvent = m.getColumnIndex(KEY_NAME);
 
@@ -201,7 +200,7 @@ public class EventDb {
 
 		return docList;
 	}
-
+/*
 	public int getClusterId(String name) {
 		String itemname = null;
 		String[] columns = new String[] { KEY_CLUSTERID };
@@ -216,6 +215,7 @@ public class EventDb {
 		Log.e(itemname, "Cluster id");
 		return Integer.parseInt(itemname);
 	}
+	*/
 	
 	public int getEventId(String name) {
 		String itemname = null;

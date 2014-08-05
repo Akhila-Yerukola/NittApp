@@ -104,7 +104,6 @@ public class MainActivity extends Activity {
 		update = new UpdateDB(MainActivity.this);
 		events = new EventDb(MainActivity.this);
 		context = getApplicationContext();
-		update.open();
 
 		// Check device for Play Services APK. If check succeeds, proceed with
 		// GCM registration.
@@ -118,7 +117,7 @@ public class MainActivity extends Activity {
 		} else {
 			Log.i("NO valid found", "No valid Google Play Services APK found.");
 		}
-		//update.open();
+		update.open();
 
 		eventsList = (ListView) findViewById(R.id.list1);
 		updatesList = (ListView) findViewById(R.id.list2);
@@ -297,7 +296,7 @@ public class MainActivity extends Activity {
 		private static final String TAG_DELETE = "delete";
 		private static final String TAG_ORGANISATIONNAME = "orgname";
 		private static final String TAG_EVENTID = "eventid";
-		//private static final String TAG_CLUSTERID = "clusterid";
+		private static final String TAG_CLUSTERID = "clusterid";
 		private static final String TAG_CLUSTERNAME = "clustername";
 
 		/*
@@ -378,7 +377,7 @@ public class MainActivity extends Activity {
 					String Edesc = obj.getString(TAG_DESC);
 					String Evenue = obj.getString(TAG_VENUE);
 					String Eorg = obj.getString(TAG_ORGANISATIONNAME);
-//					String Eclusterid = obj.getString(TAG_CLUSTERID);
+					String Eclusterid = obj.getString(TAG_CLUSTERID);
 					String Eclustername = obj.getString(TAG_CLUSTERNAME);
 					String Eeventid = obj.getString(TAG_EVENTID);
 					String deleted = obj.getString(TAG_DELETE);
@@ -390,7 +389,7 @@ public class MainActivity extends Activity {
 						}
 						if (events.checkId(Eeventid) == 0) {
 							events.createEntry(Ename, Edate, Etime, Edesc,
-									Evenue, Eorg, Eeventid,
+									Evenue, Eorg, Eeventid, Eclusterid,
 									Eclustername, deleted, update);
 
 						}
@@ -481,16 +480,16 @@ public class MainActivity extends Activity {
 				System.out.println("post-execute");
 				jObj = new JSONObject(json);
 				contacts = jObj.getJSONArray("updates");
-				Log.e("parsedlength",contacts.length()+"");
+				Log.e("parsedlength", contacts.length() + "");
 				int i;
 				for (i = 0; i < contacts.length(); i++) {
 					JSONObject obj = contacts.getJSONObject(i);
 					Utext = obj.getString(TAG_TEXT);
-					
-					
+
 					uname.add(i, Utext);
-					if(i>=lengthOfUpdates){
-					update.createEntry(Utext);}
+					if (i >= lengthOfUpdates) {
+						update.createEntry(Utext);
+					}
 					// Log.e("name", ename.get(i));
 				}
 				lengthOfUpdates = i;
@@ -506,8 +505,7 @@ public class MainActivity extends Activity {
 			ArrayAdapter<String> adapter1 = new MyCustomAdapterUpdate(
 					MainActivity.this, R.layout.rowupdates, uname);
 			updatesList.setAdapter(adapter1);
-			//Log.e("hema ", "akhila");
-
+			// Log.e("hema ", "akhila");
 
 		}
 
